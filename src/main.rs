@@ -1,6 +1,8 @@
 #[allow(clippy::wildcard_imports)]
 use leptos::*;
 
+mod luhn;
+
 fn main() {
     mount_to_body(|| view! { <App /> });
 }
@@ -25,6 +27,7 @@ fn App() -> impl IntoView {
                 {move || count()}
             </button>
             <progress
+                class="p-8"
                 max="50"
                 // signals are functions, so `value=count` and `value=move || count.get()`
                 // are interchangeable.
