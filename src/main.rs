@@ -10,14 +10,13 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
-    let new_luhn = Luhn::new("");
     let (luhn, set_luhn) = create_signal(Luhn::new(""));
-    let generate_valid_luhn_number = luhn().generate_valid_luhn_number();
+    let generate_valid_luhn_number = Luhn::generate_valid_luhn_number();
     set_luhn(generate_valid_luhn_number);
     view! {
         <div style="flex ">
             <button on:click=move |_| {
-                set_luhn(luhn().generate_valid_luhn_number());
+                set_luhn(Luhn::generate_valid_luhn_number());
             }>
 
                 "Click me: " {move || luhn().to_string()}

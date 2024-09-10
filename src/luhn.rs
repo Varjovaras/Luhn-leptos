@@ -22,13 +22,13 @@ impl Luhn {
     }
 
     #[must_use]
-    pub fn generate_valid_luhn_number(&mut self) -> Self {
+    pub fn generate_valid_luhn_number() -> Self {
         let mut rng = rand::thread_rng();
         // let mut valid_count = 0;
         let mut valid_number: Self = Self::new("");
 
         for i in 0..ITERATIONS {
-            let random_string: String = (0..self.string_length)
+            let random_string: String = (0..valid_number.string_length)
                 .map(|_| DIGITS[rng.gen_range(0..DIGITS.len())])
                 .collect();
 
