@@ -21,6 +21,7 @@ fn App() -> impl IntoView {
 
                 "Click me: " {move || luhn().to_string()}
             </button>
+
             // <progress
             //     class="p-16 w-full"
             //     max="50"
