@@ -12,22 +12,15 @@ fn App() -> impl IntoView {
     let (count, set_count) = create_signal(0);
 
     view! {
-        <div style="display: flex">
-            <button
-                on:click=move |_| {
-                    set_count.update(|n| *n += 1);
-                }
-                class:red=move || count() % 2 == 1
-                style="position: absolute"
-                style:left=move || format!("{}px", count() + 100)
-                style:background-color=move || format!("rgb({}, {}, 100)", count(), 100)
-            >
+        <div style="flex ">
+            <button on:click=move |_| {
+                set_count.update(|n| *n += 1);
+            }>
 
-                "Click me: "
-                {move || count()}
+                "Click me: " {move || count()}
             </button>
             <progress
-                class="p-8"
+                class="p-16 w-full"
                 max="50"
                 // signals are functions, so `value=count` and `value=move || count.get()`
                 // are interchangeable.
