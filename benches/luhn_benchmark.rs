@@ -7,10 +7,12 @@ fn original_is_credit_card(s: &str) -> bool {
     let mut modified_string = String::new();
     for (i, &c) in chars.iter().enumerate() {
         if i % 2 == 0 {
+            #[allow(clippy::unwrap_used)]
             let mut new_digit = c.to_digit(10).unwrap() * 2;
             if new_digit > 9 {
                 new_digit = new_digit / 10 + new_digit % 10;
             }
+            #[allow(clippy::unwrap_used)]
             modified_string.push(char::from_digit(new_digit, 10).unwrap());
         } else {
             modified_string.push(c);
@@ -60,24 +62,24 @@ fn criterion_benchmark(c: &mut Criterion) {
     let long_cc = &generate_random_cc_number(1_000_000);
 
     c.bench_function("original_valid_16", |b| {
-        b.iter(|| original_is_credit_card(black_box(valid_cc)))
+        b.iter(|| original_is_credit_card(black_box(valid_cc)));
     });
     c.bench_function("optimized_valid_16", |b| {
-        b.iter(|| optimized_is_credit_card(black_box(valid_cc)))
+        b.iter(|| optimized_is_credit_card(black_box(valid_cc)));
     });
 
     c.bench_function("original_invalid_16", |b| {
-        b.iter(|| original_is_credit_card(black_box(invalid_cc)))
+        b.iter(|| original_is_credit_card(black_box(invalid_cc)));
     });
     c.bench_function("optimized_invalid_16", |b| {
-        b.iter(|| optimized_is_credit_card(black_box(invalid_cc)))
+        b.iter(|| optimized_is_credit_card(black_box(invalid_cc)));
     });
 
     c.bench_function("original_long_1000", |b| {
-        b.iter(|| original_is_credit_card(black_box(long_cc)))
+        b.iter(|| original_is_credit_card(black_box(long_cc)));
     });
     c.bench_function("optimized_long_1000", |b| {
-        b.iter(|| optimized_is_credit_card(black_box(long_cc)))
+        b.iter(|| optimized_is_credit_card(black_box(long_cc)));
     });
 }
 
