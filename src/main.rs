@@ -19,15 +19,13 @@ fn Layout() -> impl IntoView {
 
 #[component]
 fn App() -> impl IntoView {
-    let (luhn, set_luhn) = create_signal(Luhn::new(""));
-    let generate_valid_luhn_number = Luhn::generate_valid_luhn_number();
-    set_luhn(generate_valid_luhn_number);
+    let (luhn, set_luhn) = create_signal(Luhn::new());
     view! {
         <div class="flex flex-row justify-center content-center py-4">
             <button
                 class="border p-4"
                 on:click=move |_| {
-                    set_luhn(Luhn::generate_valid_luhn_number());
+                    set_luhn(Luhn::new());
                 }
             >
 

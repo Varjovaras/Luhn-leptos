@@ -3,8 +3,8 @@ use std::fmt::Display;
 use rand::Rng;
 
 const DIGITS: [char; 10] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-const LENGTH: u32 = 16;
-const ITERATIONS: u32 = 10_000_000;
+pub const DEFAULT_LENGTH: u32 = 16;
+// const ITERATIONS: u32 = 10_000_000;
 
 #[derive(Debug, Clone)]
 pub struct Luhn {
@@ -16,35 +16,63 @@ pub struct Luhn {
 
 impl Luhn {
     #[must_use]
-    pub fn new(s: &str) -> Self {
-        Self {
-            string_length: LENGTH,
-            credit_card_number: s.into(),
+    pub fn new() -> Self {
+        let mut luhn = Self {
+            string_length: DEFAULT_LENGTH,
+            credit_card_number: String::new(),
             end_result: 0,
             i: 0,
-        }
+        };
+        luhn.generate_valid_luhn_number();
+        luhn
     }
 
     #[must_use]
-    pub fn generate_valid_luhn_number() -> Self {
+    pub fn new_with_length(length: u32) -> Self {
+        let mut luhn = Self {
+            string_length: length,
+            credit_card_number: String::new(),
+            end_result: 0,
+            i: 0,
+        };
+        luhn.generate_valid_luhn_number();
+        luhn
+    }
+
+    #[must_use]
+    pub fn get_length(self) -> u32 {
+        self.string_length
+    }
+
+    pub fn change_length(&mut self, new_length: u32) {
+        self.string_length = new_length;
+    }
+
+    pub fn generate_valid_luhn_number(&mut self) {
         let mut rng = rand::thread_rng();
         // let mut valid_count = 0;
-        let mut valid_number: Self = Self::new("");
-
-        for i in 0..ITERATIONS {
-            let random_string: String = (0..valid_number.string_length)
+        let mut i = 0;
+        loop {
+            let random_string: String = (0..self.string_length)
                 .map(|_| DIGITS[rng.gen_range(0..DIGITS.len())])
                 .collect();
 
             if is_credit_card(&random_string) {
                 println!("i = {i}");
-                valid_number.credit_card_number = random_string;
-                valid_number.i = i;
-                valid_number.end_result = get_result(&valid_number.credit_card_number);
+                self.credit_card_number = random_string;
+                self.i = i;
+                self.end_result = get_result(&self.credit_card_number);
                 break;
             }
+
+            i += 1;
         }
-        valid_number
+    }
+}
+
+impl Default for Luhn {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
