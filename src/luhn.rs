@@ -16,7 +16,7 @@ pub struct Luhn {
 
 impl Luhn {
     #[must_use]
-    pub fn new() -> Self {
+    fn new() -> Self {
         let mut luhn = Self {
             string_length: DEFAULT_LENGTH,
             credit_card_number: String::new(),
@@ -46,6 +46,7 @@ impl Luhn {
 
     pub fn change_length(&mut self, new_length: u32) {
         self.string_length = new_length;
+        self.generate_valid_luhn_number();
     }
 
     pub fn generate_valid_luhn_number(&mut self) {
@@ -80,8 +81,13 @@ impl Display for Luhn {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "(credit_card_number: {}, how many iterations: {}, end_result: {})",
-            self.credit_card_number, self.i, self.end_result
+            "
+            (credit_card_number: ,
+
+             how many iterations: {}, end_result: {})",
+            // self.credit_card_number,
+            self.i,
+            self.end_result
         )
     }
 }
