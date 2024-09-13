@@ -1,5 +1,5 @@
 [package]
-name = "leptos-tutorial"
+name = "luhn-leptos"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,8 @@ edition = "2021"
 console_error_panic_hook = "0.1.7"
 leptos = { version = "0.6.15", features = ["csr", "nightly"] }
 rand = "0.8.5"
+criterion = "0.5.1"
+
+[[bench]]
+name = "luhn_benchmark"
+harness = false

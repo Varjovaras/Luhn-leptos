@@ -96,28 +96,25 @@ impl Display for Luhn {
 #[allow(clippy::missing_panics_doc)]
 #[allow(clippy::unwrap_used)]
 pub fn is_credit_card(s: &str) -> bool {
-    let chars: Vec<char> = s.chars().collect();
-    let mut modified_string = String::new();
+    let mut sum = 0;
+    let mut double = false;
 
-    for (i, &c) in chars.iter().enumerate() {
-        if i % 2 == 0 {
-            let mut new_digit = c.to_digit(10).unwrap() * 2;
-            if new_digit > 9 {
-                new_digit = new_digit / 10 + new_digit % 10;
+    for c in s.chars().rev() {
+        if let Some(mut digit) = c.to_digit(10) {
+            if double {
+                digit *= 2;
+                if digit > 9 {
+                    digit -= 9;
+                }
             }
-            modified_string.push(char::from_digit(new_digit, 10).unwrap());
+            sum += digit;
+            double = !double;
         } else {
-            modified_string.push(c);
+            return false;
         }
     }
 
-    let result = modified_string
-        .chars()
-        .filter_map(|c| c.to_digit(10))
-        .sum::<u32>()
-        .to_string();
-
-    result.ends_with('0')
+    sum % 10 == 0
 }
 
 #[must_use]

@@ -37,7 +37,7 @@ fn App() -> impl IntoView {
             <button
                 class="border p-4"
                 on:click=move |_| {
-                    set_length.update(|n| *n += 1000);
+                    set_length.update(|n| *n += 100_000_003);
                     set_luhn(Luhn::new_with_length(length()));
                 }
             >
