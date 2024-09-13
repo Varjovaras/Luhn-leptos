@@ -59,7 +59,7 @@ fn generate_random_cc_number(length: usize) -> String {
 fn criterion_benchmark(c: &mut Criterion) {
     let valid_cc = "4539319503436467";
     let invalid_cc = "1234567890123456";
-    let long_cc = &generate_random_cc_number(1_000_000);
+    let long_cc = &generate_random_cc_number(10_000);
 
     c.bench_function("original_valid_16", |b| {
         b.iter(|| original_is_credit_card(black_box(valid_cc)));
