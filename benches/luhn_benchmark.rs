@@ -1,3 +1,4 @@
+#![cfg(not(target_arch = "wasm32"))]
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rand::Rng;
 
